@@ -63,3 +63,5 @@ let dataScience = {
 	}
 	]
 }
+
+module.exports = dataScience;
