@@ -11,7 +11,7 @@ const heroeController = {
             if (listaHeroes[i].id == req.params.id){
                 heroeMostrar = `Hola, mi nombre es ${listaHeroes[i].nombre} y soy ${listaHeroes[i].profesion}`;                
             } 
-            if (req.params.id > 10){
+            if (req.params.id > listaHeroes.length){
                 heroeMostrar = 'No encontramos al cientifico indicado. Por favor , elija otro id.';
             }
         }
