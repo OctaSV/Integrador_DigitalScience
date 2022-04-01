@@ -1,38 +1,40 @@
 const heroes = require('../data/science')
 
 const heroeController = {
-    index: function(req, res) {
+    index: (req, res) => {
         return res.send(heroes.lista)
     },
-    show: function (req, res) {
-        let heroe = heroes.lista[req.params.id -1];
-        if (heroe != undefined) {
-            res.send(`Hola, mi nombre es ${heroe.nombre} y soy ${heroe.profesion}`);
-        } else{
-            res.send('No encontramos al cientifico indicado. Por favor , elija otro id.')
+    show: (req, res) => {
+        let listaHeroes = heroes.lista;
+        let heroeMostrar = '';
+        for (let i = 0; i < listaHeroes.length; i++) {
+            if (listaHeroes[i].id == req.params.id){
+                heroeMostrar = `Hola, mi nombre es ${listaHeroes[i].nombre} y soy ${listaHeroes[i].profesion}`;                
+            } 
+            if (req.params.id > 10){
+                heroeMostrar = 'No encontramos al cientifico indicado. Por favor , elija otro id.';
+            }
         }
-
-    //     for (let i = 0; i < heroes.lista.lenght ; i++) {
-    //        if (heroes.lista[i].id == req.params.id) {
-    //            res.send(`Hola, mi nombre es ${heroes.lista[i].nombre} y soy ${heroes.lista[i].profesion}`)
-    //        } else{
-    //            res.send('No encontramos al científico indicado. Por favor, elija otro id')
-    //        }
-    //     }
-
-    // show: function (req, res) {
-    //     let heroe = heroes.lista[req.params.id];
-    //     if (heroe != undefined) {
-    //         let nombre = heroe.nombre;
-    //         let profesion = heroe.profesion;
-    //             return res.send(`Hola, mi nombre es ${nombre} y soy  ${profesion}`)
-    //     } else  {
-    //         return res.send('No encontramos al científico indicado. Por favor, elija otro id')
-    //     };
-
+        return res.send(heroeMostrar);
     },
-    bio: function (req, res) {
-        
+    showResenia: (req, res) => {
+        let listaHeroes = heroes.lista;
+        let heroeMostrar = '';
+        for (let i = 0; i < listaHeroes.length ; i++) {
+            if (heroes.lista[i].id == req.params.id && req.params.ok == null) {
+                heroeMostrar = `Soy ${listaHeroes[i].nombre} y lamento que no desees saber más de mi :(`;
+            } 
+            if (heroes.lista[i].id == req.params.id && req.params.ok == 'ok') {
+                heroeMostrar = `${heroes.lista[i].nombre}: ${heroes.lista[i].resenia}`;
+            }
+            if (heroes.lista[i].id < req.params.id){
+                heroeMostrar = 'No encontramos al científico indicado para mostrar su biografía.';
+            }
+        }
+        return res.send(heroeMostrar);
+    },
+    showCredits: (req, res) => {
+            res.send(`¡Gracias a nuestros héroes! Créditos: Francisco Jofré, Octavio Soncini y Valentin del Pino.`);  
     }
 }
 
